@@ -1,0 +1,54 @@
+{% extends "base.html" %}
+{% block title %}Usuarios{% endblock %}
+
+{% block content %}
+<h3 class="mb-3">Gestión de usuarios</h3>
+
+<div class="row">
+  <div class="col-md-5">
+    <h5>Crear usuario</h5>
+    <form method="post">
+      {% csrf_token %}
+      {{ form.as_p }}
+      <button type="submit" class="btn btn-success">Crear</button>
+    </form>
+  </div>
+
+  <div class="col-md-7">
+    <h5 class="mt-4 mt-md-0">Listado de usuarios</h5>
+    <table class="table table-striped table-sm">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Usuario</th>
+          <th>Email</th>
+          <th>Acciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for u in usuarios %}
+        <tr>
+          <td>{{ u.id }}</td>
+          <td>{{ u.username }}</td>
+          <td>{{ u.email }}</td>
+          <td>
+            {% if user != u %}
+            <form method="post" action="{% url 'eliminar_usuario' u.id %}" style="display:inline;">
+              {% csrf_token %}
+              <button class="btn btn-danger btn-sm" onclick="return confirm('¿Eliminar usuario?');">
+                Eliminar
+              </button>
+            </form>
+            {% else %}
+              <span class="text-muted">Tú</span>
+            {% endif %}
+          </td>
+        </tr>
+        {% empty %}
+        <tr><td colspan="4">No hay usuarios registrados.</td></tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
+{% endblock %}
