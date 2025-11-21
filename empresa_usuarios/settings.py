@@ -6,7 +6,8 @@ SECRET_KEY = 'django-insecure-reemplaza-esta-clave-para-produccion'
 
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ["*"]
+
 
 INSTALLED_APPS = [
     'django.contrib.admin',
